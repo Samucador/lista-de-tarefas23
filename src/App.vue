@@ -25,7 +25,7 @@ export default {
   name: 'App',
   data() {
     return {
-      titulo: "Minha lista de tarefas",
+      titulo: "Minha lista de tarefas.",
       novaTarefa:"",
       tarefas: [
         {titulo: "Estudar", checked: false},
