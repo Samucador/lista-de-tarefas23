@@ -1,45 +1,44 @@
 <template>
-  <div class="container">
-    <h1>{{ titulo }}</h1>
-    <div class="input-group">
-      <input @keyup.enter="adicionarTarefa" v-model="novaTarefa" type="text"/>
-      <span class="input-group-btn">
-        <button @click="adicionarTarefa" class="btn btn-primary">Adicionar</button>
-      </span>
+  <section>
+    <cabeca :valor="titulo" />
+    <div class="container">
+      <adicionar-tarefa @adicionarTarefa="adicionarTarefa" />
+      <listar-tarefas :tarefas="tarefas" />
+      <footer>
+        <em>Altere o nome de sua lista de tarefas: </em>
+        <entrada-dados v-model="titulo" type="text" />
+      </footer>
     </div>
-    <ul>
-      <li v-for="(tarefa, index) in tarefas" :key="index" :class="{removed: tarefa.checked}">
-        <input type="checkbox" v-model="tarefa.checked">
-        <label>{{tarefa.titulo}}</label>
-      </li>
-    </ul>
-    <footer>
-      <em>Altere o nome de sua lista de tarefas: </em>
-      <input v-model="titulo" type="text" />
-    </footer>
-  </div>
+    <rodape />
+  </section>
 </template>
 
 <script>
+import cabeca from '@/components/cabeca';
+import rodape from '@/components/rodape';
+import listarTarefas from '@/components/listarTarefas';
+import adicionarTarefa from '@/components/adicionarTarefa';
+import entradaDados from '@/components/templates/entradaDados';
 export default {
   name: 'App',
+  components: { cabeca, rodape, listarTarefas, adicionarTarefa, entradaDados },
   data() {
     return {
       titulo: "Minha lista de tarefas",
-      novaTarefa:"",
       tarefas: [
-        {titulo: "Estudar", checked: false},
-        {titulo: "Programar", checked: true},
+        {titulo: "Acordar", checked: true},
+        {titulo: "Comer", checked: false},
+        {titulo: "Fazer coisas", checked: false},
+        {titulo: "Dormir", checked: false},
       ],
     };
   },
   methods: {
-    adicionarTarefa(){
+    adicionarTarefa(novaTarefa){
       this.tarefas.push({
-        titulo: this.novaTarefa,
+        titulo: novaTarefa,
         checked: false,
       });
-      this.novaTarefa="";
     }
   }
 }
@@ -50,17 +49,13 @@ export default {
   width: 40%;
   margin: 20px auto 0px auto;
 }
-
 ul li {
   list-style: none;
 }
-
 .removed {
-  color:seagreen;
+  color:darkslateblue;
 }
-
 .removed label {
   text-decoration: line-through;
 }
-
 </style>
